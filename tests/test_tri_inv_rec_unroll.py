@@ -62,7 +62,8 @@ def block_random_triu_matrix(n, block_dim_x, block_dim_y, scale=0.1):
 
 
 def cond_of(A: torch.tensor) -> float:
-    """Condition number of I + A, the matrix the kernel actually inverts."""
+    """Maximum condition number of I + A over all 2D matrices formed on the
+    last two dimensions (-2, -1) of A."""
     n = A.shape[-1]
     M = torch.eye(n, dtype=torch.float64) + A.reshape(-1, n, n).double()
     return float(torch.linalg.cond(M).max())
